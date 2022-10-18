@@ -25,5 +25,7 @@ object Main extends App with Syllabary {
   }
 
   val hiraganas = hiragana.keys.toList.shuffle
+  val start = System.currentTimeMillis()
   f(Queue.from(hiraganas.take(10)), hiraganas.drop(10))
+  println(s"total time: ${(System.currentTimeMillis() - start)/1000}s")
 }
