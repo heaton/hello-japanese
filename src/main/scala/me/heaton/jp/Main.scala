@@ -1,8 +1,9 @@
 package me.heaton.jp
 
 import scala.collection.immutable.Queue
+import scala.util.Random
 
-object Main extends App with Syllabary {
+object Main extends App with Syllabary with Learning {
   def f(next10: Queue[String], rest: List[String], answered: Set[String] = Set()): Unit = {
     next10 match {
       case c +: tail =>
@@ -24,8 +25,9 @@ object Main extends App with Syllabary {
     }
   }
 
-  val hiraganas = hiragana.keys.toList.shuffle
+  val excludes = learned.shuffle.drop(10)
+  val practising = hiragana.keys.toList.filterNot(excludes.contains).shuffle
   val start = System.currentTimeMillis()
-  f(Queue.from(hiraganas.take(10)), hiraganas.drop(10))
-  println(s"total time: ${(System.currentTimeMillis() - start)/1000}s")
+  f(Queue.from(practising.take(10)), practising.drop(10))
+  println(s"total time: ${(System.currentTimeMillis() - start) / 1000}s")
 }
